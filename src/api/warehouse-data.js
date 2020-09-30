@@ -2,27 +2,27 @@ export const inventoryData = {
   1: [{
     "warehouseId": 1,
     "itemId": 100,
+    "itemName": "Waterproof seal",
+    "itemDescription": "For sealing specimens to preserve them",
     "itemSKU": 12345,
     "itemQuantity": 110,
-    "itemName": "Waterproof seal",
-    "itemDescription": "For sealing specimens to preserve them"
   },
   {
     "warehouseId": 1,
     "itemId": 101,
+    "itemName": "Waterproof sealant",
+    "itemDescription": "Used alongside the waterproof seal",
     "itemSKU": 12346,
     "itemQuantity": 150,
-    "itemName": "Waterproof sealant",
-    "itemDescription": "Used alongside the waterproof seal in order to seal specimens to preserve them"
   }],
   2: [
     {
       "warehouseId": 2,
       "itemId": 103,
+      "itemName": "Wood glue",
+      "itemDescription": "Used to glue wood together",
       "itemSKU": 12347,
       "itemQuantity": 105,
-      "itemName": "Wood glue",
-      "itemDescription": "Used to glue wood together"
     }
   ]
 };

@@ -7,6 +7,7 @@ export default function InventoryTable(props) {
     <Table>
       <thead>
         <tr>
+          <th>Warehouse ID</th>
           <th>Item ID</th>
           <th>Name</th>
           <th>Description</th>

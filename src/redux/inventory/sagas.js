@@ -46,7 +46,7 @@ export function* fetchInventory(action) {
 
 export function* updateInventoryItem(action) {
   try {
-    const updatedItem = _.get(action, 'payload.item', null);
+    const updatedItem = _.get(action, 'payload.item', {});
 
     ////// What an actual call to an API would look like
     // const response = yield call(api.put, `/warehouses/${warehouseId}/inventory/${itemId}`);

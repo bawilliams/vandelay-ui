@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Button, Input, InputGroupAddon } from 'reactstrap';
 import _ from 'lodash';
 import { deleteInventoryItemAction, updateInventoryItemAction } from '../redux/inventory/actions';
+
+const convertToNumber = {
+  'itemQuantity': true,
+  'itemSKU': true,
+  'itemId': true,
+  'warehouseId': true,
+}
 
 class ItemRow extends Component {
   state = {
@@ -11,8 +18,12 @@ class ItemRow extends Component {
   };
 
   handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log(this.state);
+    const { name } = e.target;
+    let { value } = e.target;
+
+    if (convertToNumber[name]) {
+      value = parseInt(value);
+    }
 
     this.setState({
       updatedItem: {
@@ -23,14 +34,13 @@ class ItemRow extends Component {
   }
 
   update = () => {
-    const { updateItem, updatedItem, item } = this.props;
-    const { updating } = this.state;
+    const { updateItem, item } = this.props;
+    const { updating, updatedItem } = this.state;
     const editedItem = { ...updatedItem };
-    console.log(this.state);
+
     if (updating) {
       this.setState({
         updating: false,
-        updatedItem: {},
       }, () => updateItem(editedItem));
       return;
     }
@@ -49,11 +59,12 @@ class ItemRow extends Component {
 
   renderRows = () => {
     const { updating, updatedItem } = this.state;
-    const { itemId, itemName, itemDescription, itemSKU, itemQuantity } = this.props.item;
+    const { warehouseId, itemId, itemName, itemDescription, itemSKU, itemQuantity } = this.props.item;
 
     if (!updating) {
       return (
         <tr>
+          <td>{warehouseId}</td>
           <td>{itemId}</td>
           <td>{itemName}</td>
           <td>{itemDescription}</td>
@@ -69,19 +80,18 @@ class ItemRow extends Component {
 
     return (
       <tr>
-        <InputGroup>
-          {updatedItem && _.map(updatedItem, (value, key) => {
-            return (
+        {updatedItem && _.map(updatedItem, (value, key) => {
+          return (
+            <td key={key}>
               <Input
-                key={key}
                 name={key}
                 value={value}
                 onChange={(e) => this.handleChange(e)}
               />
-            );
-          })}
-          <InputGroupAddon addonType="append"><Button color="success" onClick={this.update}>Save</Button></InputGroupAddon>
-        </InputGroup>
+            </td>
+          );
+        })}
+        <InputGroupAddon addonType="append"><Button color="success" onClick={this.update}>Save</Button></InputGroupAddon>
       </tr>
     )
   }
