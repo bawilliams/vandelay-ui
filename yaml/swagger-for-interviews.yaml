@@ -128,6 +128,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Inventory'
+  '/warehouses/{warehouseId}/inventory/{itemId}':
     put:
       tags:
         - inventory
@@ -158,36 +159,29 @@ paths:
             type: array
             items:
               $ref: '#/definitions/InventoryItem'
-      delete:
-        tags:
-          - inventory
-        summary: Updates an inventory item in a warehouse
-        operationId: updateItem
-        parameters:
-          - name: warehouseId
-            in: path
-            description: The ID of the warehouse containing the item
-            required: true
-            type: string
-          - name: item
-            description: |
-              This object represents all the Item specifics
-            in: body
-            required: true
-            schema:
-              $ref: '#/definitions/InventoryUpdate'
-          - name: itemId
-            in: path
-            description: The ID of the inventory item
-            required: true
-            type: string
-        responses:
-          '200':
-            description: Item Deleted
-            schema:
-              type: array
-              items:
-                $ref: '#/definitions/InventoryItem'
+    delete:
+      tags:
+        - inventory
+      summary: Deletes an inventory item in a warehouse
+      operationId: deleteItem
+      parameters:
+        - name: warehouseId
+          in: path
+          description: The ID of the warehouse containing the item
+          required: true
+          type: string
+        - name: itemId
+          in: path
+          description: The ID of the inventory item
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Item Deleted
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/InventoryItem'
 definitions:
   Factory:
     type: object
@@ -217,9 +211,9 @@ definitions:
       machineName:
         type: string
         example: Extruder AB-100
-      machineDescription: null
-      type: string
-      example: 'Extruder with 1,000fpm output capacity'
+      machineDescription:
+        type: string
+        example: 'Extruder with 1,000fpm output capacity'
   Warehouse:
     type: object
     properties:
